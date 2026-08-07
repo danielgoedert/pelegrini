@@ -66,19 +66,15 @@ Portal.bpmn = {
    fornecedor do seguinte.
 -------------------------------------------------------------------------- */
 Portal.sipocs = [
-  { id: 'layout',        numero: 1, titulo: 'Layout',        imagem: 'files/sipoc/Layout.png' },
-  { id: 'borracharia',   numero: 2, titulo: 'Borracharia',   imagem: 'files/sipoc/Borracharia.png' },
-  { id: 'fundicao',      numero: 3, titulo: 'Fundição',      pendente: true },
-  { id: 'raspagem',      numero: 4, titulo: 'Raspagem',      pendente: true },
-  { id: 'polimento',     numero: 5, titulo: 'Polimento',     imagem: 'files/sipoc/Polimento.png' },
-  { id: 'galvanoplastia', numero: 6, titulo: 'Galvanoplastia', pendente: true },
-  { id: 'pintura',       numero: 7, titulo: 'Pintura',       imagem: 'files/sipoc/Pintura.png' },
-  { id: 'embalagem',     numero: 8, titulo: 'Embalagem',     imagem: 'files/sipoc/Embalagem.png' },
-
-  /* O 9º saiu dos próprios quadros: a Embalagem entrega para a Expedição.
-     Se o processo que falta for outro (Comercial, Almoxarifado...), é só
-     trocar o titulo e o id desta linha. */
-  { id: 'expedicao',     numero: 9, titulo: 'Expedição',     imagem: 'files/sipoc/Expedicao.png' }
+  { id: 'comercial',     numero: 1, titulo: 'Comercial',     imagem: 'files/sipoc/Comercial.png' },
+  { id: 'layout',        numero: 2, titulo: 'Layout',        imagem: 'files/sipoc/Layout.png' },
+  { id: 'borracharia',   numero: 3, titulo: 'Borracharia',   imagem: 'files/sipoc/Borracharia.png' },
+  { id: 'fundicao',      numero: 4, titulo: 'Fundição',      pendente: true },
+  { id: 'raspagem',      numero: 5, titulo: 'Raspagem',      pendente: true },
+  { id: 'polimento',     numero: 6, titulo: 'Polimento',     imagem: 'files/sipoc/Polimento.png' },
+  { id: 'galvanoplastia', numero: 7, titulo: 'Galvanoplastia', pendente: true },
+  { id: 'pintura',       numero: 8, titulo: 'Pintura',       imagem: 'files/sipoc/Pintura.png' },
+  { id: 'embalagem',     numero: 9, titulo: 'Embalagem',     imagem: 'files/sipoc/Embalagem.png' }
 ];
 
 /* ----------------------------------------------------------------------------
