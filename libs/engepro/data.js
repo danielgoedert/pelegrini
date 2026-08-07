@@ -78,7 +78,7 @@ Portal.sipocs = [
   /* O 9º saiu dos próprios quadros: a Embalagem entrega para a Expedição.
      Se o processo que falta for outro (Comercial, Almoxarifado...), é só
      trocar o titulo e o id desta linha. */
-  { id: 'expedicao',     numero: 9, titulo: 'Expedição',     pendente: true }
+  { id: 'expedicao',     numero: 9, titulo: 'Expedição',     imagem: 'files/sipoc/Expedicao.png' }
 ];
 
 /* ----------------------------------------------------------------------------
