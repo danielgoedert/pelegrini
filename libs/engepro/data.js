@@ -66,7 +66,7 @@ Portal.bpmn = {
    fornecedor do seguinte.
 -------------------------------------------------------------------------- */
 Portal.sipocs = [
-  { id: 'comercial',     numero: 1, titulo: 'Comercial',     imagem: 'files/sipoc/Comercial.png' },
+  { id: 'comercial',     numero: 1, titulo: 'Comercial',     pendente: true },
   { id: 'layout',        numero: 2, titulo: 'Layout',        imagem: 'files/sipoc/Layout.png' },
   { id: 'borracharia',   numero: 3, titulo: 'Borracharia',   imagem: 'files/sipoc/Borracharia.png' },
   { id: 'fundicao',      numero: 4, titulo: 'Fundição',      pendente: true },
@@ -77,5 +77,16 @@ Portal.sipocs = [
   { id: 'embalagem',     numero: 9, titulo: 'Embalagem',     imagem: 'files/sipoc/Embalagem.png' }
 ];
 
-Portal.vsm = [{ id:'atual', numero:1, titulo:'VSM — Estado Atual', imagem:'files/vsm/atual.svg' }];
-Portal.vsm = [];
+/* ----------------------------------------------------------------------------
+   4. VSM
+   Deixe a lista vazia para exibir o estado "em construção".
+   Quando tiver o mapa, jogue o arquivo em files/vsm/ e adicione aqui:
+
+     { id:'vsm-atual', numero:1, titulo:'VSM — Estado Atual',
+       imagem:'files/vsm/vsm-atual.svg' }
+
+   Aceita .svg, .png e .jpg. SVG fica nítido em qualquer zoom.
+-------------------------------------------------------------------------- */
+Portal.vsm = [
+  { id: 'vsm-atual', numero: 1, titulo: 'VSM — Estado Atual', imagem: 'files/vsm/VSM — Estado Atual.png' }
+];
