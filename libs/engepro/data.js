@@ -66,13 +66,13 @@ Portal.bpmn = {
    fornecedor do seguinte.
 -------------------------------------------------------------------------- */
 Portal.sipocs = [
-  { id: 'comercial',     numero: 1, titulo: 'Comercial',     pendente: true },
+  { id: 'comercial',     numero: 1, titulo: 'Comercial',     imagem: 'files/sipoc/Comercial.png' },
   { id: 'layout',        numero: 2, titulo: 'Layout',        imagem: 'files/sipoc/Layout.png' },
   { id: 'borracharia',   numero: 3, titulo: 'Borracharia',   imagem: 'files/sipoc/Borracharia.png' },
-  { id: 'fundicao',      numero: 4, titulo: 'Fundição',      pendente: true },
-  { id: 'raspagem',      numero: 5, titulo: 'Raspagem',      pendente: true },
+  { id: 'fundicao',      numero: 4, titulo: 'Fundição',      imagem: 'files/sipoc/Fundicao.png' },
+  { id: 'raspagem',      numero: 5, titulo: 'Raspagem',      imagem: 'files/sipoc/Raspagem.png' },
   { id: 'polimento',     numero: 6, titulo: 'Polimento',     imagem: 'files/sipoc/Polimento.png' },
-  { id: 'galvanoplastia', numero: 7, titulo: 'Galvanoplastia', pendente: true },
+  { id: 'galvanoplastia', numero: 7, titulo: 'Galvanoplastia', imagem: 'files/sipoc/Galvanoplastia.png' },
   { id: 'pintura',       numero: 8, titulo: 'Pintura',       imagem: 'files/sipoc/Pintura.png' },
   { id: 'embalagem',     numero: 9, titulo: 'Embalagem',     imagem: 'files/sipoc/Embalagem.png' }
 ];
