@@ -77,14 +77,5 @@ Portal.sipocs = [
   { id: 'embalagem',     numero: 9, titulo: 'Embalagem',     imagem: 'files/sipoc/Embalagem.png' }
 ];
 
-/* ----------------------------------------------------------------------------
-   4. VSM
-   Deixe a lista vazia para exibir o estado "em construção".
-   Quando tiver o mapa, jogue o arquivo em files/vsm/ e adicione aqui:
-
-     { id:'vsm-atual', numero:1, titulo:'VSM — Estado Atual',
-       imagem:'files/vsm/vsm-atual.svg' }
-
-   Aceita .svg, .png e .jpg. SVG fica nítido em qualquer zoom.
--------------------------------------------------------------------------- */
+Portal.vsm = [{ id:'atual', numero:1, titulo:'VSM — Estado Atual', imagem:'files/vsm/atual.svg' }];
 Portal.vsm = [];
