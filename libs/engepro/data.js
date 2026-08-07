@@ -88,5 +88,5 @@ Portal.sipocs = [
    Aceita .svg, .png e .jpg. SVG fica nítido em qualquer zoom.
 -------------------------------------------------------------------------- */
 Portal.vsm = [
-  { id: 'vsm-atual', numero: 1, titulo: 'VSM — Estado Atual', imagem: 'files/vsm/VSM — Estado Atual.png' }
+  { id: 'vsm-atual', numero: 1, titulo: 'VSM — Estado Atual', imagem: 'files/vsm/vsm-atual.png' }
 ];
