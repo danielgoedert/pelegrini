@@ -77,5 +77,5 @@ Portal.sipocs = [
   { id: 'embalagem',     numero: 9, titulo: 'Embalagem',     imagem: 'files/sipoc/Embalagem.png' }
 ];
 
-Portal.vsm = [{ id:'atual', numero:1, titulo:'VSM — Estado Atual', imagem:'files/vsm/VSM — Estado Atual.png' }];
+Portal.vsm = [{ id:'atual', numero:1, titulo:'VSM — Estado Atual', imagem:'files/vsm/atual.svg' }];
 Portal.vsm = [];
