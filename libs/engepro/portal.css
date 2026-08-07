@@ -1,0 +1,968 @@
+/* ============================================================================
+   Portal de Processos — Pelegrini Pins
+   Identidade visual EngePro Consultoria Jr. (desde 2010 · Taokei!)
+
+   Paleta extraída do material oficial (proposta Bunge):
+     #12163A  navy profundo   — barra lateral, faixa 1 do SIPOC
+     #15214A  navy            — títulos, faixa 2
+     #214981  azul royal      — acento primário, faixa 3
+     #3A67AA  azul médio      — interação, faixa 4
+     #80A6DE  azul claro      — faixa 5, detalhes sobre navy
+
+   Tipografia (arquivos locais em libs/engepro/fonts/ — funciona offline):
+     Ultra    — títulos em caixa alta com a barra vertical à esquerda,
+                como nos slides da EngePro
+     Poppins  — texto corrido e interface
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Ultra';
+  src: url('fonts/ultra-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face { font-family: 'Poppins'; src: url('fonts/poppins-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/poppins-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/poppins-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/poppins-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/poppins-800.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
+
+:root {
+  --navy-950: #0C102C;
+  --navy-900: #12163A;
+  --navy-800: #15214A;
+  --royal-700: #214981;
+  --steel-600: #3A67AA;
+  --sky-400: #80A6DE;
+  --sky-200: #C6D7F0;
+  --sky-100: #E8EFFA;
+  --sky-50: #F3F7FC;
+
+  --bg: #F4F6FB;
+  --surface: #FFFFFF;
+  --ink: #15214A;
+  --ink-soft: #3E4A6B;
+  --muted: #6C7897;
+  --line: #DFE6F2;
+  --line-strong: #C7D2E6;
+
+  --sidebar-w: 296px;
+  --header-h: 80px;
+
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+
+  --shadow-sm: 0 1px 2px rgba(18, 22, 58, .06), 0 1px 3px rgba(18, 22, 58, .04);
+  --shadow-md: 0 2px 6px rgba(18, 22, 58, .07), 0 6px 18px rgba(18, 22, 58, .07);
+  --shadow-lg: 0 10px 40px rgba(18, 22, 58, .16);
+
+  --font: 'Poppins', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+  --display: 'Ultra', 'Rockwell Extra Bold', 'Arial Black', Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+::selection { background: rgba(128, 166, 222, .35); }
+
+:focus-visible { outline: 2px solid var(--steel-600); outline-offset: 2px; }
+
+/* ===========================================================  LAYOUT  ==== */
+
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--header-h) 1fr;
+  grid-template-areas: 'header header' 'nav main';
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ===========================================================  MARCA   ==== */
+
+/* as duas marcas assinam juntas o canto direito do cabeçalho:
+   EngePro (consultoria) e, depois do fio, Pelegrini (cliente) */
+.brands {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+/* os logos originais são pretos sobre transparente; sobre o navy do
+   cabeçalho eles são invertidos para branco na hora de exibir */
+.brand-logo {
+  display: block; max-height: 54px; max-width: 100%; object-fit: contain;
+  filter: brightness(0) invert(1) drop-shadow(0 1px 8px rgba(12, 16, 44, .55));
+}
+
+.brand-wordmark {
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: .02em;
+  color: #fff;
+  line-height: 1;
+  white-space: nowrap;
+}
+.brand-wordmark span { color: var(--sky-400); }
+
+/* ===========================================================  HEADER  ==== */
+
+/* Faixa navy com a foto da equipe esmaecida ao fundo (a foto vem de
+   Portal.brand.fotoHeader, injetada como --header-photo) e, por cima,
+   a escada de azuis dos slides como fio inferior. */
+.header {
+  grid-area: header;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 22px;
+  background: linear-gradient(112deg, var(--navy-950) 0%, var(--navy-900) 46%, #1B2C5E 100%);
+  min-width: 0;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 3px;
+  background-image: var(--header-photo, none);
+  background-size: cover;
+  /* enquadra a faixa das costas: a fileira de camisetas ENGE PRO */
+  background-position: center 58%;
+  opacity: .42;
+  /* a foto é escura; clarear para aparecer atrás do navy sem roubar a cena */
+  filter: brightness(1.65) contrast(1.05) saturate(.8);
+  pointer-events: none;
+}
+
+/* leve sombra à esquerda e à direita para os logos respirarem sobre a foto */
+.header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(12, 16, 44, .88) 0%, rgba(12, 16, 44, .8) 15%, rgba(12, 16, 44, .1) 36%, rgba(12, 16, 44, .1) 58%, rgba(12, 16, 44, .78) 88%),
+    linear-gradient(90deg, var(--navy-900) 0%, var(--navy-800) 25%, var(--royal-700) 50%, var(--steel-600) 75%, var(--sky-400) 100%) left bottom / 100% 3px no-repeat;
+}
+
+.header > * { position: relative; z-index: 1; }
+
+/* a barra vertical + título em caixa alta é o cabeçalho dos slides EngePro */
+.header-titles {
+  min-width: 0;
+  flex: 1;
+  border-left: 4px solid var(--sky-400);
+  padding-left: 14px;
+}
+
+.header-kicker {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: #A9C6F2;
+  line-height: 1.4;
+  text-shadow: 0 1px 3px rgba(12, 16, 44, .9);
+}
+
+.header-title {
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: .045em;
+  color: #fff;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 3px rgba(12, 16, 44, .9), 0 2px 16px rgba(12, 16, 44, .75);
+}
+
+.client {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 16px;
+  border-left: 1px solid rgba(255, 255, 255, .18);
+  flex-shrink: 0;
+}
+
+.client-logo {
+  display: block; max-height: 38px; max-width: 190px; object-fit: contain;
+  filter: brightness(0) invert(1) drop-shadow(0 1px 8px rgba(12, 16, 44, .55));
+}
+
+.client-fallback { text-align: right; line-height: 1.25; }
+.client-fallback b { display: block; font-size: 14px; font-weight: 700; color: #fff; }
+.client-fallback i { font-style: normal; font-size: 11px; color: #9DB2D6; }
+
+/* o botão de menu (mobile) sobre o navy */
+.header .menu-btn {
+  background: rgba(255, 255, 255, .08);
+  border-color: rgba(255, 255, 255, .26);
+  color: #DCE7F8;
+}
+.header .menu-btn:hover { background: rgba(255, 255, 255, .16); color: #fff; }
+
+/* ===========================================================  NAV     ==== */
+
+.nav {
+  grid-area: nav;
+  display: flex;
+  flex-direction: column;
+  background: var(--navy-900);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 18px;
+}
+
+.nav::-webkit-scrollbar { width: 8px; }
+.nav::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .16); border-radius: 4px; }
+.nav::-webkit-scrollbar-track { background: transparent; }
+
+.nav-search { padding: 14px 14px 8px; flex-shrink: 0; }
+
+.nav-search input {
+  width: 100%;
+  padding: 8px 12px 8px 34px;
+  font-family: inherit;
+  font-size: 13px;
+  color: #fff;
+  background: rgba(255, 255, 255, .09) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2380A6DE' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.6-3.6'/%3E%3C/svg%3E") no-repeat 10px center / 15px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: var(--r-md);
+  outline: none;
+  transition: border-color .15s, background-color .15s;
+}
+.nav-search input::placeholder { color: #8CA0C7; }
+.nav-search input:focus { border-color: var(--sky-400); background-color: rgba(255, 255, 255, .14); }
+
+/* --- seções (as três abas) --- */
+
+.section { flex-shrink: 0; }
+.section + .section { margin-top: 2px; }
+
+.section-btn {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 11px 16px;
+  background: none;
+  border: 0;
+  border-left: 3px solid transparent;
+  color: #BECCE8;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-align: left;
+  transition: background-color .15s, color .15s;
+}
+
+.section-btn:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+
+.section-btn .ico { width: 17px; height: 17px; flex-shrink: 0; opacity: .85; }
+.section-btn .count {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 600;
+  color: #9DB2D6;
+  background: rgba(255, 255, 255, .1);
+  padding: 2px 7px;
+  border-radius: 20px;
+}
+.section-btn .chev {
+  width: 13px; height: 13px; flex-shrink: 0; opacity: .6;
+  transition: transform .18s;
+}
+
+.section.open > .section-btn { color: #fff; background: rgba(255, 255, 255, .07); border-left-color: var(--sky-400); }
+.section.open > .section-btn .ico { opacity: 1; }
+.section.open > .section-btn .chev { transform: rotate(90deg); }
+.section.active > .section-btn { border-left-color: var(--sky-200); }
+
+.section-body { display: none; padding: 4px 0 10px; }
+.section.open .section-body { display: block; }
+
+/* --- itens --- */
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 8px 16px 8px 40px;
+  background: none;
+  border: 0;
+  border-left: 3px solid transparent;
+  color: #A9BCDC;
+  font-size: 13px;
+  text-align: left;
+  line-height: 1.35;
+  transition: background-color .13s, color .13s;
+}
+.nav-item:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+
+.nav-item.sub { padding-left: 58px; font-size: 12.5px; }
+
+.nav-item.current {
+  background: rgba(128, 166, 222, .18);
+  border-left-color: var(--sky-400);
+  color: #fff;
+  font-weight: 600;
+}
+
+.nav-item .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor; opacity: .5; flex-shrink: 0;
+}
+/* os números em círculo cinza vêm do "Etapas da Consultoria" dos slides */
+.nav-item .num {
+  min-width: 19px; height: 19px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 700;
+  border-radius: 50%;
+  background: #E4E8F0;
+  color: var(--navy-800);
+  flex-shrink: 0;
+}
+.nav-item.current .num { background: var(--sky-400); color: var(--navy-950); }
+.nav-item .txt { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.nav-item .tag {
+  margin-left: auto; flex-shrink: 0;
+  font-size: 9.5px; font-weight: 700; letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--sky-400);
+  border: 1px solid rgba(128, 166, 222, .45);
+  border-radius: 20px;
+  padding: 1px 6px;
+}
+
+.nav-empty {
+  padding: 10px 16px 10px 40px;
+  font-size: 12px;
+  color: #7F92B8;
+  line-height: 1.5;
+}
+
+/* --- assinatura discreta da consultoria no pé da barra --- */
+
+.nav-foot {
+  margin-top: auto;
+  padding: 16px 16px 14px;
+  flex-shrink: 0;
+}
+
+/* assinatura empilhada: a marca em cima, a qualificação embaixo com a
+   largura inteira da barra — assim "desde 2010" não quebra sozinho */
+.foot-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, .12);
+}
+/* a marca de verdade, invertida para branco como no cabeçalho */
+.foot-logo { flex-shrink: 0; display: flex; align-items: center; }
+.foot-logo-img {
+  display: block; width: 82px; height: auto;
+  filter: brightness(0) invert(1);
+  opacity: .92;
+}
+.foot-wordmark {
+  font-family: var(--display); font-size: 15px; color: #fff;
+  letter-spacing: .02em;
+}
+.foot-wordmark b { color: var(--sky-400); font-weight: 400; }
+
+.foot-id { min-width: 0; line-height: 1.4; }
+.foot-id b { display: block; font-size: 11.5px; font-weight: 700; color: #fff; letter-spacing: .03em; }
+.foot-id span { display: block; font-size: 10px; color: #8FA3CC; }
+
+/* ===========================================================  MAIN    ==== */
+
+.main { grid-area: main; position: relative; overflow: hidden; background: var(--bg); }
+
+.view { position: absolute; inset: 0; display: none; flex-direction: column; }
+.view.active { display: flex; }
+
+/* --- barra de ferramentas --- */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+  min-height: 50px;
+}
+
+.crumbs { display: flex; align-items: center; gap: 7px; font-size: 13px; min-width: 0; flex: 1; }
+.crumbs .crumb { color: var(--muted); background: none; border: 0; padding: 3px 5px; border-radius: var(--r-sm); font-size: 13px; }
+.crumbs .crumb.link:hover { color: var(--royal-700); background: var(--sky-100); }
+.crumbs .crumb.now { color: var(--ink); font-weight: 600; cursor: default; }
+.crumbs .sep { color: var(--line-strong); flex-shrink: 0; }
+
+.tools { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+
+.tool {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: 32px; min-width: 32px; padding: 0 8px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  transition: background-color .13s, border-color .13s, color .13s;
+}
+.tool:hover { background: var(--sky-100); border-color: var(--steel-600); color: var(--royal-700); }
+.tool:active { background: var(--sky-200); }
+.tool svg { width: 15px; height: 15px; }
+.tool.wide { padding: 0 11px; }
+
+.zoom-level {
+  font-size: 12px; font-variant-numeric: tabular-nums;
+  color: var(--muted); min-width: 46px; text-align: center;
+  user-select: none;
+}
+
+.tool-sep { width: 1px; height: 20px; background: var(--line); margin: 0 3px; }
+
+/* ===========================================================  BPMN    ==== */
+
+.stage {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 1px 1px, var(--line-strong) 1px, transparent 0) 0 0 / 22px 22px,
+    var(--bg);
+  cursor: grab;
+}
+.stage.panning { cursor: grabbing; }
+
+.canvas { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
+.canvas svg { display: block; max-width: none; }
+
+/* subprocesso clicável dentro do SVG */
+.bpmn-link { cursor: pointer; }
+.bpmn-link rect, .bpmn-link path, .bpmn-link polygon { transition: fill .16s, stroke .16s; }
+.bpmn-link:hover rect { fill: var(--sky-100) !important; stroke: var(--royal-700) !important; }
+
+.hotspot {
+  position: absolute;
+  border: 2px solid var(--steel-600);
+  border-radius: 4px;
+  background: rgba(58, 103, 170, .1);
+  pointer-events: none;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0; }
+  22%, 62% { opacity: 1; }
+}
+
+.stage-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 14px;
+  background: rgba(18, 22, 58, .9);
+  color: #DCE7F8;
+  font-size: 12px;
+  border-radius: 20px;
+  pointer-events: none;
+  box-shadow: var(--shadow-md);
+  transition: opacity .5s;
+}
+.stage-hint.gone { opacity: 0; }
+.stage-hint kbd {
+  font-family: inherit; font-size: 11px;
+  background: rgba(255, 255, 255, .16);
+  border-radius: 4px; padding: 1px 5px;
+}
+
+/* ===========================================================  SIPOC   ==== */
+
+/* não redefinir display aqui: .view controla a visibilidade pela classe .active */
+.sipoc-view { min-height: 0; }
+
+.sipoc-stage {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 26px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* --- o quadro SIPOC --- */
+
+.sipoc {
+  width: 100%;
+  max-width: 1180px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
+  padding: 26px 30px 30px;
+}
+
+/* cabeçalho no padrão dos slides: barra vertical + título pesado em caps */
+.sipoc-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 2px 0 16px 16px;
+  margin-bottom: 20px;
+  border-left: 6px solid var(--navy-800);
+  border-bottom: 2px solid var(--sky-100);
+}
+.sipoc-head .kind {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--navy-800);
+}
+.sipoc-head .name {
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--royal-700);
+  min-width: 0;
+}
+
+.band { display: grid; grid-template-columns: 158px 1fr; gap: 16px; align-items: stretch; }
+.band + .band { margin-top: 12px; }
+
+.band-label {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 7px;
+  padding: 15px 10px;
+  border-radius: var(--r-md);
+  background: var(--navy-800);
+  color: #fff;
+  text-align: center;
+}
+/* a escada de azuis das cinco faixas é a gradação dos slides EngePro */
+.band[data-b="1"] .band-label { background: var(--navy-900); }
+.band[data-b="2"] .band-label { background: var(--navy-800); }
+.band[data-b="3"] .band-label { background: var(--royal-700); }
+.band[data-b="4"] .band-label { background: var(--steel-600); }
+.band[data-b="5"] .band-label { background: var(--sky-400); color: var(--navy-950); }
+
+.band-label .t {
+  font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  line-height: 1.2;
+}
+.band-label svg { width: 27px; height: 27px; opacity: .95; }
+
+.band-content {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  padding: 15px 18px;
+  background: var(--sky-50);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  min-height: 74px;
+  min-width: 0;   /* sem isto o item de grid estica e o fluxo vaza do cartão */
+}
+.band-content.center { justify-content: center; }
+
+/* pílulas */
+.pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 9px 17px;
+  border-radius: 22px;
+  font-size: 12.5px; font-weight: 600; line-height: 1.25;
+  text-align: center;
+  color: #fff;
+  background: var(--royal-700);
+  box-shadow: var(--shadow-sm);
+}
+.pill.supplier { background: var(--navy-800); }
+.pill.input    { background: var(--royal-700); }
+.pill.output   { background: var(--steel-600); }
+
+.pill.client {
+  flex-direction: column; gap: 5px;
+  background: none; color: var(--navy-800); box-shadow: none;
+  font-size: 12.5px;
+}
+.pill.client svg { width: 30px; height: 30px; color: var(--royal-700); }
+
+/* fluxo de processos */
+.flow { display: flex; align-items: center; gap: 0; flex-wrap: nowrap; overflow-x: auto; padding: 4px 2px 8px; width: 100%; min-width: 0; }
+.flow::-webkit-scrollbar { height: 7px; }
+.flow::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+
+.step {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 86px; min-height: 46px;
+  padding: 9px 13px;
+  background: var(--surface);
+  border: 1.5px solid var(--royal-700);
+  border-radius: var(--r-sm);
+  font-size: 12px; font-weight: 500; line-height: 1.25;
+  text-align: center;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.terminal { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
+.terminal .circle {
+  width: 46px; height: 46px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--navy-800);
+  background: var(--surface);
+  font-size: 11px; font-weight: 600; color: var(--ink);
+}
+.terminal .circle.end { border-width: 2.5px; }
+.terminal .cap { font-size: 10.5px; color: var(--muted); white-space: nowrap; }
+
+.arrow { flex-shrink: 0; width: 26px; color: var(--steel-600); display: flex; align-items: center; }
+.arrow svg { width: 26px; height: 11px; }
+
+/* vazio */
+.band-empty { color: var(--muted); font-size: 12.5px; font-style: italic; }
+
+/* --- estado pendente --- */
+.pendente-note {
+  display: flex; align-items: flex-start; gap: 11px;
+  margin-bottom: 20px; padding: 13px 16px;
+  background: var(--sky-100);
+  border: 1px solid var(--sky-200);
+  border-left: 3px solid var(--steel-600);
+  border-radius: var(--r-md);
+  font-size: 13px; color: var(--ink-soft); line-height: 1.5;
+}
+.pendente-note svg { width: 17px; height: 17px; flex-shrink: 0; margin-top: 1px; color: var(--steel-600); }
+.pendente-note code {
+  background: rgba(58, 103, 170, .13); color: var(--royal-700);
+  padding: 1px 5px; border-radius: 4px;
+  font-size: 12px;
+}
+
+/* imagem no lugar do desenho: o quadro já traz título e faixas, então o
+   cartão vira só uma moldura fina em volta */
+.sipoc-foto { padding: 10px; max-width: 1320px; }
+.sipoc-img { display: block; width: 100%; height: auto; border-radius: var(--r-md); }
+
+/* --- lugar guardado para um quadro que ainda não veio --- */
+
+.sipoc-vaga { text-align: center; }
+.sipoc-vaga .sipoc-head { text-align: left; }
+.vaga-art {
+  margin: 30px auto 18px;
+  width: 76px; height: 76px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--sky-50);
+  color: var(--sky-400);
+}
+.vaga-art svg { width: 36px; height: 36px; }
+.sipoc-vaga h3 {
+  font-size: 16px; font-weight: 700; color: var(--navy-800);
+  letter-spacing: .01em;
+}
+.sipoc-vaga p {
+  max-width: 560px;
+  margin: 10px auto 0;
+  font-size: 13px; line-height: 1.65; color: var(--ink-soft);
+}
+.sipoc-vaga code {
+  background: rgba(58, 103, 170, .13); color: var(--royal-700);
+  padding: 1px 5px; border-radius: 4px;
+  font-size: 12px;
+}
+.vaga-code {
+  display: inline-block;
+  margin: 14px auto 34px;
+  padding: 9px 14px !important;
+  font-size: 12.5px !important;
+  background: var(--navy-800) !important;
+  color: #BFD3F0 !important;
+  border-radius: var(--r-md) !important;
+}
+
+/* ==================================================  CARROSSEL       ==== */
+
+.filmstrip {
+  flex-shrink: 0;
+  display: flex; align-items: stretch; gap: 10px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -2px 10px rgba(18, 22, 58, .05);
+}
+
+.strip-scroll {
+  display: flex; gap: 10px;
+  overflow-x: auto; overflow-y: hidden;
+  flex: 1;
+  padding: 2px 2px 6px;
+  scroll-behavior: smooth;
+}
+.strip-scroll::-webkit-scrollbar { height: 6px; }
+.strip-scroll::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
+.strip-scroll::-webkit-scrollbar-track { background: transparent; }
+
+.thumb {
+  flex-shrink: 0;
+  width: 132px;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.thumb:hover { border-color: var(--sky-400); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.thumb.current { border-color: var(--royal-700); box-shadow: 0 0 0 3px var(--sky-100); }
+
+.thumb-canvas {
+  position: relative;
+  height: 68px;
+  overflow: hidden;
+  background: var(--sky-50);
+  border-bottom: 1px solid var(--line);
+}
+.thumb-canvas .mini {
+  position: absolute; top: 0; left: 0;
+  width: 1180px;
+  transform-origin: 0 0;
+  transform: scale(.112);
+  pointer-events: none;
+}
+/* o quadro inteiro na miniatura — cortar esconderia justo as faixas */
+.thumb-canvas img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+.thumb-canvas .mini-blank {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--line-strong);
+}
+.thumb-canvas .mini-blank svg { width: 26px; height: 26px; }
+
+.thumb-cap {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 9px;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  line-height: 1.3;
+}
+.thumb-cap .n {
+  flex-shrink: 0;
+  width: 17px; height: 17px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #E4E8F0; color: var(--navy-800);
+  border-radius: 50%;
+  font-size: 10px; font-weight: 700;
+}
+.thumb.current .thumb-cap { color: var(--navy-800); font-weight: 600; }
+.thumb.current .thumb-cap .n { background: var(--royal-700); color: #fff; }
+.thumb-cap .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.strip-nav {
+  flex-shrink: 0;
+  display: flex; align-items: center; gap: 4px;
+}
+.strip-nav .tool { height: 100%; min-height: 40px; }
+
+/* ===========================================================  VAZIO   ==== */
+
+.empty {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px;
+  padding: 40px;
+  text-align: center;
+}
+.empty-art {
+  width: 74px; height: 74px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--sky-100);
+  color: var(--royal-700);
+  margin-bottom: 14px;
+}
+.empty-art svg { width: 34px; height: 34px; }
+.empty h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--navy-800);
+}
+.empty p { margin: 0; max-width: 460px; font-size: 13.5px; line-height: 1.65; color: var(--muted); }
+.empty code {
+  background: var(--sky-100); color: var(--royal-700);
+  padding: 2px 6px; border-radius: 4px; font-size: 12.5px;
+}
+.empty .steps {
+  margin-top: 18px; padding: 16px 20px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md);
+  text-align: left; font-size: 13px; color: var(--ink-soft); line-height: 1.9;
+  box-shadow: var(--shadow-sm);
+}
+.empty .steps b { color: var(--ink); }
+
+/* ===========================================================  LOADER  ==== */
+
+/* a engrenagem do "Pro" girando enquanto prepara — e o Taokei da casa */
+.loader {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px;
+  background: var(--bg);
+  z-index: 5;
+  transition: opacity .3s;
+}
+.loader.gone { opacity: 0; pointer-events: none; }
+.loader .gear {
+  width: 42px; height: 42px;
+  color: var(--royal-700);
+  animation: gearspin 1.8s linear infinite;
+}
+.loader .loader-cap {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@keyframes gearspin { to { transform: rotate(360deg); } }
+
+/* compatibilidade: se algum lugar ainda usar o spinner antigo */
+.loader .spin {
+  width: 30px; height: 30px;
+  border: 3px solid var(--sky-200);
+  border-top-color: var(--royal-700);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===========================================================  FULLSCREEN = */
+
+.main:fullscreen, .view:fullscreen { background: var(--bg); }
+
+/* ===========================================================  RESPONSIVO = */
+
+@media (max-width: 1040px) {
+  .app { grid-template-columns: 1fr; grid-template-areas: 'header' 'main'; grid-template-rows: var(--header-h) 1fr; }
+  /* espaço mais curto: as duas marcas encolhem juntas para o título respirar */
+  .brands { gap: 12px; }
+  .client { padding-left: 12px; }
+  .brand-logo { max-height: 38px; max-width: 96px; }
+  .client-logo { max-height: 30px; max-width: 140px; }
+  .nav {
+    position: fixed; top: 0; left: 0; bottom: 0; width: var(--sidebar-w);
+    z-index: 40; transform: translateX(-100%); transition: transform .22s;
+    box-shadow: var(--shadow-lg);
+  }
+  .nav.open { transform: none; }
+  .menu-btn { display: inline-flex !important; }
+  .scrim { position: fixed; inset: 0; background: rgba(12, 16, 44, .5); z-index: 39; }
+}
+
+.menu-btn { display: none; }
+
+@media (max-width: 720px) {
+  .header-title { font-size: 14px; }
+  /* as duas marcas continuam juntas, só menores */
+  .brands { gap: 10px; }
+  .client { padding-left: 10px; }
+  .brand-logo { max-height: 32px; max-width: 74px; }
+  .client-logo { max-height: 26px; max-width: 120px; }
+}
+
+/* abaixo disso não cabem as duas: fica só a marca do cliente */
+@media (max-width: 560px) {
+  .brand-block { display: none; }
+  .client { padding-left: 0; border-left: 0; }
+  .sipoc { padding: 18px 16px 22px; }
+  .band { grid-template-columns: 1fr; gap: 8px; }
+  .band-label { flex-direction: row; padding: 9px 14px; }
+  .band-label svg { width: 19px; height: 19px; }
+  .sipoc-head { flex-direction: column; gap: 2px; }
+  .sipoc-head .kind { font-size: 19px; }
+  .sipoc-head .name { font-size: 13.5px; }
+  .sipoc-stage { padding: 14px; }
+}
+
+/* ==================================================  MOVIMENTO REDUZIDO == */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===========================================================  IMPRESSÃO == */
+
+@media print {
+  .nav, .toolbar, .filmstrip, .stage-hint, .menu-btn { display: none !important; }
+  /* o cabeçalho fica: assina o material impresso com as duas marcas —
+     mas em branco, com os logos na cor original (sem gastar tinta na foto) */
+  .app { display: block; height: auto; }
+  .header { background: #fff !important; border-bottom: 2px solid var(--line); margin-bottom: 14px; }
+  .header::before, .header::after { display: none !important; }
+  .brand-logo, .client-logo { filter: none; }
+  .brand-wordmark { color: var(--navy-800); }
+  .brand-wordmark span { color: var(--royal-700); }
+  .header-titles { border-left-color: var(--navy-800); }
+  .header-kicker { color: var(--royal-700); }
+  .header-title { color: var(--navy-800); text-shadow: none; }
+  .client { border-left-color: var(--line); }
+  .client-fallback b { color: var(--navy-800); }
+  .client-fallback i { color: var(--muted); }
+  /* no papel as duas marcas continuam juntas à direita */
+  .brand-block { display: flex; }
+  .main, .view { position: static; overflow: visible; }
+  .sipoc { box-shadow: none; border: 0; max-width: none; }
+  .sipoc-stage { overflow: visible; padding: 0; }
+  /* a escada de azuis é a identidade do quadro: manter na impressão */
+  .band-label, .pill, .thumb-cap .n, .nav-item .num {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
