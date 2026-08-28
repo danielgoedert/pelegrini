@@ -378,7 +378,7 @@
         r.setAttribute('stroke-width', 3);
         r.setAttribute('pointer-events', 'none');
         r.style.animation = 'pulse 2.6s ease-in-out infinite';
-        svg.appendChild(r);
+        g.appendChild(r);
       } catch (_) { /* getBBox falha se o nó estiver oculto — ignorar */ }
     });
   }
