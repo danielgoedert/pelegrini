@@ -126,13 +126,52 @@
     var model = (window.Bizagi && window.Bizagi.AppModel) || null;
     if (!model || !model.pages) return out;
 
+    var seen = {};
     model.pages.forEach(function (p) {
-      out.push({ id: p.id, nome: p.name, imagem: fixPath(p.image), nivel: 0, paiId: null,
-                 versao: p.version, autor: p.author });
+      if (!p.isSubprocessPage && !p.isCallActivityPage) {
+        if (!seen[p.id]) {
+          seen[p.id] = true;
+          out.push({
+            id: p.id,
+            nome: p.name,
+            imagem: fixPath(p.image),
+            nivel: 0,
+            paiId: null,
+            versao: p.version,
+            autor: p.author
+          });
+        }
+      }
       (p.subPages || []).forEach(function (s) {
-        out.push({ id: s.id, nome: s.name, imagem: fixPath(s.image), nivel: 1, paiId: p.id });
+        var elemIds = [s.id];
+        (p.elements || []).forEach(function (el) {
+          (el.pageElements || []).forEach(function (pe) {
+            if (pe.id === s.id) elemIds.push(pe.id);
+            (pe.properties || []).forEach(function (prop) {
+              if (prop.pageRef === s.id || prop.processPageRef === s.id) {
+                elemIds.push(pe.id);
+              }
+            });
+          });
+        });
+
+        var subNome = (s.name || '').replace(/ - Pintura$/, '');
+        seen[s.id] = true;
+        out.push({
+          id: s.id,
+          nome: subNome,
+          imagem: fixPath(s.image),
+          nivel: 1,
+          paiId: p.id,
+          elemIds: elemIds
+        });
       });
     });
+
+    var subPageIds = {};
+    out.forEach(function (d) { if (d.paiId) subPageIds[d.id] = true; });
+    out = out.filter(function (d) { return d.paiId != null || !subPageIds[d.id]; });
+
     return out;
   }
 
@@ -353,7 +392,13 @@
     if (!svg) return;
 
     filhos.forEach(function (f) {
-      var g = svg.querySelector('[id="' + f.id + '"]') || svg.querySelector('[id="gfx-' + f.id + '"]');
+      var targetIds = f.elemIds || [f.id];
+      var g = null;
+      for (var i = 0; i < targetIds.length; i++) {
+        var tid = targetIds[i];
+        g = svg.querySelector('[id="' + tid + '"]') || svg.querySelector('[id="gfx-' + tid + '"]');
+        if (g) break;
+      }
       if (!g) return;
 
       g.classList.add('bpmn-link');
