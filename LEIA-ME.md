@@ -90,37 +90,26 @@ vez de quebrar.
 São **as imagens que a equipe montou**, exibidas como estão. Os arquivos ficam
 em `files/sipoc/` e a lista está em `Portal.sipocs`, no `data.js`.
 
-São **9 lugares**, na ordem do fluxo produtivo (o cliente de um é o fornecedor
+São **13 processos**, na ordem do fluxo produtivo (o cliente de um é o fornecedor
 do seguinte):
 
 | # | Processo | Situação |
 |---|---|---|
-| 1 | Layout | pronto |
-| 2 | Borracharia | pronto |
-| 3 | Fundição | a fazer |
-| 4 | Raspagem | a fazer |
-| 5 | Polimento | pronto |
-| 6 | Galvanoplastia | a fazer |
-| 7 | Pintura | pronto |
-| 8 | Embalagem | pronto |
-| 9 | Expedição | a fazer |
+| 1 | Comercial | pronto |
+| 2 | Layout | pronto |
+| 3 | Modelagem | pronto |
+| 4 | Borracharia | pronto |
+| 5 | Fundição | pronto |
+| 6 | Raspagem | pronto |
+| 7 | Polimento | pronto |
+| 8 | Galvanoplastia | pronto |
+| 9 | Pintura | pronto |
+| 10 | Costura | pronto |
+| 11 | Embalagem | pronto |
+| 12 | Expedição | pronto |
+| 13 | Financeiro | pronto |
 
-Os quatro que faltam já aparecem no portal com o lugar guardado — na barra
-lateral com a etiqueta *a fazer*, e abrindo o quadro a própria tela mostra a
-linha exata que precisa ser trocada.
-
-**Para publicar um deles**, são dois passos:
-
-1. salve a imagem em `files/sipoc/` — ex.: `files/sipoc/Fundicao.png`
-2. no `data.js`, naquela linha, troque `pendente: true` por
-   `imagem: 'files/sipoc/Fundicao.png'`
-
-Recarregue a página e pronto — ele entra no lugar certo, na miniatura de baixo
-e na busca, sozinho.
-
-> Os nomes 3, 4, 6 e 9 saíram dos próprios quadros já prontos (são os
-> fornecedores e clientes citados neles). Se o processo que falta for outro,
-> é só trocar o `titulo` e o `id` da linha.
+Todos os 13 SIPOCs estão publicados e disponíveis no portal com navegação fluida, miniaturas no rodapé e atalhos de teclado.
 
 ## BPMN
 
